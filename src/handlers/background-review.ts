@@ -132,6 +132,7 @@ export function setupBackgroundReview(
           }
         } else if (result.code !== 0) {
           ctx.ui.notify(`⚠️ Background review exited with code ${result.code}`, "warning");
+        }
         // Auto-review is best-effort. Non-zero exits are silently skipped —
         // common on Windows where pi CLI may resolve differently. The next
         // review cycle will retry.
