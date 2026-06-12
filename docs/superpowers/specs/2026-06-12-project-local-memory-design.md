@@ -49,20 +49,24 @@ import { existsSync } from "node:fs";
  * 从 extension 入口文件路径检测记忆根目录。
  *
  * 全局安装: ~/.pi/agent/extensions/.../index.ts
- *   → 记忆根: ~/.pi/agent/pi-hermes-memory/
+ *   → 向上找到 ~/.pi（含 agent/子目录）→ ~/.pi/agent/pi-hermes-memory/
  * 项目级安装: <proj>/.pi/extensions/.../index.ts
- *   → 记忆根: <proj>/.pi/hermes-memory/
+ *   → 向上找到 <proj>/.pi（不含 agent/）→ <proj>/.pi/hermes-memory/
  */
 export function detectMemoryRoot(entryFile: string): string {
   let dir = path.dirname(entryFile);
   while (dir !== path.dirname(dir)) {
     const piDir = path.join(dir, ".pi");
     if (existsSync(piDir)) {
+      // ~/.pi 有 agent/ 子目录（全局 Pi home）; 项目 .pi 没有
+      if (existsSync(path.join(piDir, "agent"))) {
+        return path.join(piDir, "agent", "pi-hermes-memory");
+      }
       return path.join(piDir, "hermes-memory");
     }
     dir = path.dirname(dir);
   }
-  // 回退到全局默认（不应到达，但保守处理）
+  // 回退（不应到达）
   return path.join(os.homedir(), ".pi", "agent", "pi-hermes-memory");
 }
 ```
