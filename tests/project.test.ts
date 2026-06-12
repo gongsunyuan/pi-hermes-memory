@@ -2,6 +2,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import * as os from "node:os";
 import * as path from "node:path";
+import { AGENT_ROOT } from "../src/paths.js";
 import { detectProject, detectProjectSkills } from "../src/project.js";
 
 describe("project detection", () => {
@@ -17,7 +18,7 @@ describe("project detection", () => {
     assert.strictEqual(result.name, "demo-repo");
     assert.strictEqual(
       result.memoryDir,
-      path.join(os.homedir(), ".pi", "agent", "projects-memory", "demo-repo"),
+      path.join(AGENT_ROOT, "projects-memory", "demo-repo"),
     );
   });
 
@@ -28,7 +29,7 @@ describe("project detection", () => {
     assert.strictEqual(result.name, "demo-repo");
     assert.strictEqual(
       result.skillsDir,
-      path.join(os.homedir(), ".pi", "agent", "projects-memory", "demo-repo", "skills"),
+      path.join(AGENT_ROOT, "projects-memory", "demo-repo", "skills"),
     );
   });
 });

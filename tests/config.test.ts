@@ -3,6 +3,7 @@ import assert from "node:assert";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as os from "node:os";
+import { AGENT_ROOT } from "../src/paths.js";
 import { loadConfig } from "../src/config.js";
 
 const TEST_CONFIG_PATH = path.join(os.tmpdir(), `hermes-memory-config-test-${process.pid}.json`);
@@ -99,7 +100,7 @@ describe("loadConfig", () => {
     }));
 
     const config = loadConfig(TEST_CONFIG_PATH);
-    assert.strictEqual(config.memoryDir, path.join(os.homedir(), ".pi", "agent", "pi-hermes-memory"));
+    assert.strictEqual(config.memoryDir, path.join(AGENT_ROOT, "pi-hermes-memory"));
   });
 
   it("resolves relative memoryDir values against ~/.pi/agent instead of cwd", () => {
@@ -109,7 +110,7 @@ describe("loadConfig", () => {
     }));
 
     const config = loadConfig(TEST_CONFIG_PATH);
-    assert.strictEqual(config.memoryDir, path.join(os.homedir(), ".pi", "agent", "custom-memory-root"));
+    assert.strictEqual(config.memoryDir, path.join(AGENT_ROOT, "custom-memory-root"));
   });
 
   it("normalizes projectsMemoryDir inside ~/.pi/agent and ignores unsafe values", () => {

@@ -3,7 +3,7 @@ import * as os from "node:os";
 import * as fs from "node:fs";
 import * as assert from "node:assert/strict";
 import { describe, it, before, after } from "node:test";
-import { detectAgentRoot } from "../src/paths.js";
+import { detectAgentRoot, AGENT_ROOT } from "../src/paths.js";
 
 const TEST_DIR = path.join(os.tmpdir(), `hermes-paths-test-${Date.now()}`);
 
@@ -43,7 +43,7 @@ describe("detectAgentRoot", () => {
     fs.mkdirSync(path.dirname(entryFile), { recursive: true });
 
     const result = detectAgentRoot(entryFile);
-    const expected = path.join(os.homedir(), ".pi", "agent");
+    const expected = AGENT_ROOT;
     assert.equal(result, expected);
   });
 });
