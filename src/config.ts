@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import * as os from "node:os";
+import { AGENT_ROOT } from "./paths.js";
 import type { MemoryConfig, MemoryOverflowStrategy, SessionSearchVariant, ThinkingLevel } from "./types.js";
 import {
   DEFAULT_MEMORY_CHAR_LIMIT,
@@ -60,9 +60,7 @@ const DEFAULT_CONFIG: MemoryConfig = {
 };
 
 export const DEFAULT_CONFIG_PATH = path.join(
-  os.homedir(),
-  ".pi",
-  "agent",
+  AGENT_ROOT,
   "hermes-memory-config.json",
 );
 

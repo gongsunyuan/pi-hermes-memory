@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import * as os from 'node:os';
+import { AGENT_ROOT } from '../paths.js';
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 import { StringEnum } from "@earendil-works/pi-ai";
@@ -21,7 +21,7 @@ interface SessionSearchToolOptions {
   sessionsDir?: string;
 }
 
-const DEFAULT_SESSIONS_DIR = path.join(os.homedir(), '.pi', 'agent', 'sessions');
+const DEFAULT_SESSIONS_DIR = path.join(AGENT_ROOT, 'sessions');
 
 export function registerSessionSearchTool(
   pi: ExtensionAPI,
