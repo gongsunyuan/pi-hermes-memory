@@ -47,8 +47,9 @@ export function setupSessionFlush(
         signal,
         timeoutMs,
       });
-    } catch {
+    } catch (err) {
       // Best-effort flush — never block shutdown
+      ctx.ui.notify(`⚠️ Session flush failed: ${err instanceof Error ? err.message : String(err)}`, "warning");
     }
   }
 

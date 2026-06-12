@@ -130,14 +130,16 @@ export function setupBackgroundReview(
           if (output && !output.toLowerCase().includes("nothing to save")) {
             ctx.ui.notify("💾 Memory auto-reviewed and updated", "info");
           }
-        }
+        } else if (result.code !== 0) {
+          ctx.ui.notify(`⚠️ Background review exited with code ${result.code}`, "warning");
         // Auto-review is best-effort. Non-zero exits are silently skipped —
         // common on Windows where pi CLI may resolve differently. The next
         // review cycle will retry.
       })
-      .catch(() => {
+      .catch((err) => {
         // Best-effort: subprocess failures (timeout, signal, spawn errors)
         // are silently ignored. The next review cycle will retry.
+        ctx.ui.notify(`⚠️ Background review failed: ${err instanceof Error ? err.message : String(err)}`, "warning");
         reviewInProgress = false;
       });
   });
